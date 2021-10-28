@@ -1,0 +1,17 @@
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 0%;
+}
+
+.graphic {
+    width: 100%;
+    float: left;
+    text-align: center;
+}
+
+
+.label {
+    width: 100%;
+    text-align: left;
+}

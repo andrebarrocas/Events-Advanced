@@ -69,13 +69,6 @@ function createGeoMap(map) {
                 return d.properties.name+"\n"+"Alcool Consumption: "+country[0]['alcconsumption']+" \n"+"Life Expectancy: "+country[0]['lifeexpectancy']
             }
         });
-        // .append('title')
-        // .text((d) => { 
-        //     var country = dataset.filter((d1) => d1.country === d.properties.name);
-        //     if (country.length != 0) {
-        //         return "Life Expectancy: "+country[0]['lifeexpectancy']
-        //     }
-        // });
 
 }
 
@@ -193,6 +186,11 @@ function createScatterPlot(data, update = false) {
                     .attr('cx', (d) => xScale(xValue(d)))
                     .attr('cy', (d) => yScale(yValue(d)))
                     .attr('r', (d) => Math.ceil(rValue(d)))
+                    .append('title')
+                    .text((d) => { 
+                        console.log(d)
+                        return d.country+"\n"+"Alcool Consumption: "+d.alcconsumption+" \n"+"Life Expectancy: "+d.lifeexpectancy
+                    })
                 );
             },
             (update) => {
@@ -207,39 +205,6 @@ function createScatterPlot(data, update = false) {
                 return exit.remove();
             }
         );
-
-    // const scale = [3, 7, 10];
-
-    // d3.select('div#scatter-label')
-    //     .append('svg')
-    //     .attr('id', 'legend')
-    //     .attr('width', 400)
-    //     .attr('height', 400);
-
-    // d3.select('div#scatter-label')
-    //     .select('#legend')
-    //     .append('text')
-    //     .attr('x', 200)
-    //     .attr('y', 40)
-    //     .text('Income Per Person (/5000)');
-
-    // for (let i = 0; i < scale.length; i++) {
-    //     d3.select('div#scatter-label')
-    //         .select('#legend')
-    //         .append('text')
-    //         .attr('x', 170+ i * 70+40)
-    //         .attr('y', 64)
-    //         .text(scale[i] + ' = ');
-
-    //     d3.select('div#scatter-label')
-    //         .select('#legend')
-    //         .append('circle')
-    //         .attr('cx', 200 + i * 70+50)
-    //         .attr('cy', 60)
-    //         .attr('r', scale[i])
-    //         .attr('fill', 'steelblue');
-    // }
-
 
 }
 
@@ -331,11 +296,6 @@ function handleClick(e, d) {
 }   
 
 function calculateFill(dataItem, i) {
-    // var scale = d3
-    //   .scaleLinear()
-    //   .domain([1, d3.max(dataSet, (d) => d.budget)])
-    //   .range([0, 1]);
-    // return d3.interpolateBlues(scale(dataItem.budget));
     return "steelblue";
   }
 

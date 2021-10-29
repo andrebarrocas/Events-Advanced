@@ -15,12 +15,12 @@ var countries = [];
 
 /*
 Tootip
-    Aparece junto ao cursor (pais do mapa ou circulo):
+    Aparece junto ao cursor (pais do mapa e circulo):
         - nome pais
         - alcoolconsumption
         - lifeexpentensy
 
-Lista lado dto
+Lista lado direito
     Clicar em paises e adicionar/remover da lista
     Destacar paises selecionados    
 */
@@ -188,7 +188,7 @@ function createScatterPlot(data, update = false) {
                     .attr('r', (d) => Math.ceil(rValue(d)))
                     .append('title')
                     .text((d) => { 
-                        console.log(d)
+                        // console.log(d)
                         return d.country+"\n"+"Alcool Consumption: "+d.alcconsumption+" \n"+"Life Expectancy: "+d.lifeexpectancy
                     })
                 );
@@ -213,68 +213,15 @@ function createScatterPlot(data, update = false) {
 function handleMouseOver(e, d) {
     var name = Object.keys(d).includes('country') ? d.country : d.properties.name;
     if (countries.includes(name)===false)
-        changeColor(d, 'red', 10);
+        changeColor(d, 'red');
 }
 
 function handleMouseLeave(e, d) {
     var name = Object.keys(d).includes('country') ? d.country : d.properties.name;
     if (countries.includes(name)===false)
-        changeColor(d, 'steelblue', 3);
+        changeColor(d, 'steelblue');
 }
 
-function changeColor(d, color, r) {
-    var name;
-    name = Object.keys(d).includes('country') ? d.country : d.properties.name;
-
-    const paths = () =>
-        d3
-        .select('div#geo')
-        .selectAll('path')
-        .filter((c) => {
-            if (name === c.properties.name) return c;
-        })
-        .style('fill', color);
-    const circles = d3.select('div#scatter').selectAll('circle');
-
-    circles
-        .filter((c) => {
-            if (name === c.country) {
-                paths();
-                return c;
-            }
-        })
-        .transition()
-        .duration(300)
-        .style('fill', color)
-        // .attr('r', r);
-
-    const rects = d3.select('div#bar').selectAll('rect');
-
-    rects
-        .filter((c) => {
-            if (name === c.country) {
-                paths();
-                return c;
-            }
-        })
-        .transition()
-        .duration(300)
-        .style('fill', color);
-
-    const outliers = d3.select('div#box').selectAll('circle');
-
-    outliers
-        .filter((c) => {
-            if (name === c.country) {
-                paths();
-                return c;
-            }
-        })
-        .transition()
-        .duration(300)
-        .style('fill', color)
-        // .attr('r', r);
-}
 
 function handleClick(e, d) {
     var name = Object.keys(d).includes('country') ? d.country : d.properties.name;
@@ -309,4 +256,57 @@ function addCountry(country) {
 function removeCountry(country) {
     var list = document.getElementById("myList");
     list.removeChild(list.childNodes[countries.indexOf(country)]);
-  }
+}
+
+
+function changeColor(d, color) {
+    var name;
+    name = Object.keys(d).includes('country') ? d.country : d.properties.name;
+
+    const paths = () =>
+        d3
+        .select('div#geo')
+        .selectAll('path')
+        .filter((c) => {
+            if (name === c.properties.name) return c;
+        })
+        .style('fill', color);
+    const circles = d3.select('div#scatter').selectAll('circle');
+
+    circles
+        .filter((c) => {
+            if (name === c.country) {
+                paths();
+                return c;
+            }
+        })
+        .transition()
+        .duration(300)
+        .style('fill', color)
+
+    const rects = d3.select('div#bar').selectAll('rect');
+
+    rects
+        .filter((c) => {
+            if (name === c.country) {
+                paths();
+                return c;
+            }
+        })
+        .transition()
+        .duration(300)
+        .style('fill', color);
+
+    const outliers = d3.select('div#box').selectAll('circle');
+
+    outliers
+        .filter((c) => {
+            if (name === c.country) {
+                paths();
+                return c;
+            }
+        })
+        .transition()
+        .duration(300)
+        .style('fill', color)
+}

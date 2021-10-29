@@ -228,12 +228,12 @@ function handleClick(e, d) {
     // console.log(name);
     if (countries.includes(name)===false){
         addCountry(name);
-        changeColor(d, 'orange', 10);
+        changeColor(d, 'orange');
         countries.push(name);
     }
     else{
         removeCountry(name);
-        changeColor(d, 'steelblue', 10);
+        changeColor(d, 'steelblue');
         
         const index = countries.indexOf(name);
         if (index > -1) {
